@@ -5,16 +5,19 @@
 # The reward_discount is the discount factor
 # Furthermore the epsilon and the epsilon decay are needed for the Epsilon-Greedy-Policy
 import random
+import copy
 from src import functions as f
 
 
 class DQNPlayerTicTacToe:
 
     def __init__(self, name, nn, reward_discount=0.9, eps_start=1.0,
-                 eps_end=0.01, eps_decay=0.99):
+                 eps_end=0.01, eps_decay=0.99, update_target_network_every=10):
         self.name = name
 
         self.dnn = nn
+        self.target_network = copy.deepcopy(self.dnn)
+        self.update_every = update_target_network_every
 
         self.epsilon = 0.0
         self.epsilon_start = eps_start
@@ -36,6 +39,10 @@ class DQNPlayerTicTacToe:
             for j in range(len(board[0])):
                 board_state.append([board[i][j]])
         return board_state
+
+    def update_target_network(self, episode):
+        if (episode % self.update_every) == 0:
+            self.target_network = copy.deepcopy(self.dnn)
 
     def make_move(self, board, episode, training):
         # At first, the epsilon has to be determined
@@ -68,13 +75,15 @@ class DQNPlayerTicTacToe:
         # Store the game step
         self.experience.append([self.prepare_board(board), move, reward, self.prepare_board(board_next), turn])
 
-    def evolve(self):
+    def evolve(self, episode):
+        self.update_target_network(episode)
+
         # Learn from the experience, it is different if it is the ending move or one before
         for i in reversed(range(len(self.experience))):
             if i < len(self.experience) - 2 and self.experience[i][4]:
                 # Not ending moves
                 target_q_values = self.dnn.query(self.experience[i][0])
-                q_values_next = self.dnn.query(self.experience[i + 2][0])
+                q_values_next = self.target_network.query(self.experience[i + 2][0])
                 [max_q_value_next] = max(q_values_next)
                 target_q_values[self.experience[i][1]] = [self.gamma * max_q_value_next]
                 self.dnn.train(self.experience[i][0], target_q_values)

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MA_DQNwithGameImplementation.iml" filepath="$PROJECT_DIR$/.idea/MA_DQNwithGameImplementation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../NeuralNetwork_TicTacToe/.idea/NeuralNetwork_TicTacToe.iml" filepath="$PROJECT_DIR$/../NeuralNetwork_TicTacToe/.idea/NeuralNetwork_TicTacToe.iml" />
     </modules>
   </component>
 </project>

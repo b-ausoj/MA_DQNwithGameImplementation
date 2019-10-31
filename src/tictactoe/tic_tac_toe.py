@@ -143,8 +143,8 @@ class TicTacToe:
 
             self.update_statistics(episode, player1, player2)
 
-            player1.evolve()
-            player2.evolve()
+            player1.evolve(episode)
+            player2.evolve(episode)
 
         print("Final statistics: ", self.statistics_total, "\n")
 

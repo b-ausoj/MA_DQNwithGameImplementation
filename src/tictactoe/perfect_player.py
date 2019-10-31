@@ -497,6 +497,6 @@ class PerfectPlayerTicTacToe:
         pass
 
     @staticmethod
-    def evolve():
+    def evolve(e):
         # Has no use, but is needed for the function of the training against this player
         pass

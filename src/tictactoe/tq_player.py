@@ -47,7 +47,7 @@ class TQPlayerTicTacToe:
         # Store the game step
         self.experience.append([self.prepare_board(board), move, reward, self.prepare_board(board_next), turn])
 
-    def evolve(self):
+    def evolve(self, e):
         # Learn from the experience, it is different if it is the ending move or one before
         for i in reversed(range(len(self.experience))):
             if i < len(self.experience) - 2 and self.experience[i][4]:

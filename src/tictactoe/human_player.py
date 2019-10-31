@@ -57,6 +57,6 @@ class HumanPlayerTicTacToe:
         pass
 
     @staticmethod
-    def evolve():
+    def evolve(episode):
         # Has no use, but is needed for the function of the training against this player
         pass
